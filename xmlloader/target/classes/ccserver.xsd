@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+		targetNamespace="http://www.example.org/ccserver"
+		xmlns="http://www.example.org/ccserver" 
+		elementFormDefault="qualified">
+		
+		<xs:element name="ccserver" >
+			<xs:complexType>
+				<xs:sequence>
+					<xs:element ref="server" minOccurs="1" maxOccurs="1"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:element>
+		
+		<xs:element name="server">
+			<xs:complexType>
+				<xs:sequence>
+					<xs:element ref="services" minOccurs="1" maxOccurs="1"/>
+				</xs:sequence>
+				<xs:attribute name="name" type="xs:string" use="required"/>
+				<xs:attribute name="port" type="xs:int" default="8080" use="required"/>
+			</xs:complexType>
+		</xs:element>
+		
+		<xs:element name="services">
+			<xs:complexType>
+				<xs:sequence>
+					<xs:element ref="service" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:element>
+		
+		<xs:element name="service">
+			<xs:complexType>
+				<xs:attribute name="name" type="xs:string" use="required"/>
+				<xs:attribute name="path" type="xs:string" use="required"/>
+			</xs:complexType>
+		</xs:element>
+		
+</xs:schema>
