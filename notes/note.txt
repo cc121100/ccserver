@@ -1,0 +1,30 @@
+CCserver note:
+
+CCserver is a web container which supports only static resources, e.g. html/css/js/image.
+
+The main purpose is to practise and deeply understand how the web works.
+
+CCserver is mainly developed with java language, and by finishing it, you should know many related skills.
+e.g. Http Protocol/IO,NIO/Socket/Thread/XML and so on.
+
+
+
+CCserver's developing code structure
+
+CCserver is developed with Java language, and the jdk version is 1.7(nio).
+The project's code is managed by maven. The structure is shown below.
+
+
+	ccserver
+		- ccserver-launcher
+		- ccserver-http
+		- ccserver-resource
+		- ccserver-threadpool
+		
+ccserver-launcher: The main part of ccserver. It is the enter of the server and the control of all part used in ccserver.
+ccserver-http: It is used to parse and assemble the http request/response content.
+ccserver-resource It is used to load the static web resources content.
+ccserver-threadpool: It is used to provide multiple threads for ccserver.
+
+
+
