@@ -1,13 +1,8 @@
 package org.ccserver.launcher;
 
-public class Launcher {
-	
-	/**
-	 * 
-	 */
-	
+public class NIOTest {
+
 	public static void main(String[] args) {
 		
 	}
-
 }
