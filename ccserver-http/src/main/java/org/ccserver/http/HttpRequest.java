@@ -1,43 +1,43 @@
 package org.ccserver.http;
 
+import java.nio.channels.SocketChannel;
 import java.util.Map;
 
 public class HttpRequest {
 
-	private String clientIpAddr;
+	private HttpRequestHeader header;
 	
-	private String clientPort;
-	
-	private String method;
-	
-	private String path;
-	
-	private String httpVersion;
-	
-	private String host;
-	
-	private String ipAddr;
-	
-	private String conState;
-	
-	private String[] accept;
-	
-	private String[] acceptEncoding;
-	
-	private String acceptLanguage;
-	
-	private String userAgent;
-	
-	private Map<String, String> cookie;
-	
-	private Map<String, Object> formData;
-	
-	private String contentLength;
-	
-	private String cacheControl;
-	
+	private HttpRequestBody body;
+
 	public HttpRequest() {
-		
+		this.header = new HttpRequestHeader();
+		this.body = new HttpRequestBody();
 	}
 
+	public HttpRequest(HttpRequestHeader header, HttpRequestBody body) {
+		super();
+		this.header = header;
+		this.body = body;
+	}
+
+	public HttpRequestHeader getHeader() {
+		return header;
+	}
+
+	public void setHeader(HttpRequestHeader header) {
+		this.header = header;
+	}
+
+	public HttpRequestBody getBody() {
+		return body;
+	}
+
+	public void setBody(HttpRequestBody body) {
+		this.body = body;
+	}
+	
+	public void generateHeader(SocketChannel sc){
+		
+	}
+	
 }
