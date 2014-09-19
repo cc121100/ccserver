@@ -216,3 +216,7 @@ pip-log.txt
 *.class
 *.class
 ccserver-launcher/target/classes/org/ccserver/launcher/Launcher.class
+*.lst
+*.lst
+*.lst
+*.lst
