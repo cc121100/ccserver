@@ -18,7 +18,7 @@ public class ThreadPool extends ThreadPoolExecutor{
 	public static ThreadPool newInstance(){
 		if(threadPool == null){
 			synchronized (threadPool) {
-				if(threadPool != null){
+				if(threadPool == null){
 					threadPool = new ThreadPool();
 				}
 			}

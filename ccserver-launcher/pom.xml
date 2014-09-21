@@ -10,4 +10,13 @@
   <version>0.0.1-SNAPSHOT</version>
   
   
+  <dependencies>
+		<dependency>
+			<groupId>org.cc</groupId>
+			<artifactId>ccserver-resource</artifactId>
+			<version>${project.version}</version>
+			<type>jar</type>
+		</dependency>
+  </dependencies>
+  
 </project>

@@ -16,25 +16,29 @@ public class NioNonBlockingSelectorTest {
     private static ByteBuffer receivebuffer = ByteBuffer.allocate(32);
     
     public static void main(String args[])
-        throws Exception
-    {
-        selector = Selector.open();
-        SocketAddress address = new InetSocketAddress(10002);
-        ServerSocketChannel channel = ServerSocketChannel.open();
-        channel.socket().bind(address);
-        channel.configureBlocking(false);
-        channel.register(selector, SelectionKey.OP_ACCEPT);
         
-        while(true)
-        {
-            selector.select();
-            Iterator<SelectionKey> iterator = selector.selectedKeys().iterator();
-            while (iterator.hasNext()) {          
-                SelectionKey selectionKey = iterator.next();  
-                iterator.remove();  
-                handleKey(selectionKey);  
-            }  
-        }
+    {
+        try {
+			selector = Selector.open();
+			SocketAddress address = new InetSocketAddress(10002);
+			ServerSocketChannel channel = ServerSocketChannel.open();
+			channel.socket().bind(address);
+			channel.configureBlocking(false);
+			channel.register(selector, SelectionKey.OP_ACCEPT);
+			
+			while(true)
+			{
+				selector.select();
+				Iterator<SelectionKey> iterator = selector.selectedKeys().iterator();
+				while (iterator.hasNext()) {          
+					SelectionKey selectionKey = iterator.next();  
+					iterator.remove();  
+					handleKey(selectionKey);  
+				}  
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
     
     private static void handleKey(SelectionKey selectionKey) throws IOException
