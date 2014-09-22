@@ -1,4 +1,4 @@
-package org.ccserver.launcher;
+package org.ccserver.launcher.factory;
 
 import org.ccserver.resource.CCServer;
 import org.ccserver.resource.IOPattern;

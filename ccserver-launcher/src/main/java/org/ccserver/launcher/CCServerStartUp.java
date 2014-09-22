@@ -1,5 +1,6 @@
 package org.ccserver.launcher;
 
+import org.ccserver.launcher.factory.CCServerFactory;
 import org.ccserver.resource.CCServer;
 import org.ccserver.serversocket.CCServerSocket;
 import org.ccserver.serversocket.NIOCCServerSocket;
@@ -18,6 +19,10 @@ public class CCServerStartUp implements Runnable {
 		ccss = ccsFactory.generate(ccServer);
 		
 		run();
+	}
+	
+	public void init(){
+		
 	}
 	
 

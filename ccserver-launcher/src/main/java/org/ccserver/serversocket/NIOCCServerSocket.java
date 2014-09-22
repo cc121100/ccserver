@@ -39,8 +39,6 @@ public class NIOCCServerSocket implements CCServerSocket {
 
 	@Override
 	public void monitor() {
-		// TODO Auto-generated method stub
-		
 		try {
 			
 			Iterator<SelectionKey> it = null;
@@ -63,6 +61,7 @@ public class NIOCCServerSocket implements CCServerSocket {
                         //System.out.println("客户端： " + client.socket().getRemoteSocketAddress().toString());
                         client.configureBlocking(false);
                         client.register(selector, SelectionKey.OP_READ);
+                        key.selector().wakeup();
                     } else if (key.isReadable()) {
 //                        key.interestOps(0);
 //                        Session session = (Session) key.attachment();
