@@ -23,6 +23,12 @@
 			<version>${project.version}</version>
 			<type>jar</type>
 		</dependency>
+		<dependency>
+			<groupId>org.cc</groupId>
+			<artifactId>ccserver-threadpool</artifactId>
+			<version>${project.version}</version>
+			<type>jar</type>
+		</dependency>
   </dependencies>
   
 </project>

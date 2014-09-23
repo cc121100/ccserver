@@ -9,7 +9,9 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 
+import org.ccserver.processor.HttpProcessor;
 import org.ccserver.resource.CCServer;
+import org.ccserver.threadpool.ThreadPool;
 
 public class NIOCCServerSocket implements CCServerSocket {
 	
@@ -80,7 +82,9 @@ public class NIOCCServerSocket implements CCServerSocket {
                             client.register(selector, SelectionKey.OP_READ);  
                         }*/
                     	
+                    	SocketChannel sc = (SocketChannel)key.channel();
                     	
+                    	ThreadPool.newInstance().execute(new HttpProcessor(ccs, sc));
                     	
                     	
                     }
