@@ -2,9 +2,11 @@ package org.ccserver.http.handler;
 
 import java.nio.channels.SocketChannel;
 
+import org.ccserver.http.HttpRequest;
+
 public interface HttpRequestHandler {
 
-	public byte[] handlerSocket(SocketChannel sc);
+	public HttpRequest handlerSocket(SocketChannel sc);
 	
 	
 }

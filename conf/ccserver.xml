@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ccserver>
+
+	<CCServerContextConstants>
+		<IOPattern>nio</IOPattern>
+		<HttpPattern>static</HttpPattern>
+	</CCServerContextConstants>
+	
+	<server port="9999">
+		<services>
+			<service name="service1" path="D:\cc\study\myserver-workspace\ccserver\ccserver-http"></service>
+		
+		</services>
+	</server>
+
+</ccserver>
