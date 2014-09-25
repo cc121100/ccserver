@@ -3,6 +3,7 @@ package org.ccserver.serversocket;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
+import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
@@ -17,9 +18,15 @@ public class NIOCCServerSocket implements CCServerSocket {
 	
 	private CCServer ccs;
 	private Selector selector;
+	
+	private ThreadPool pool;
+	
+	private static ByteBuffer receivebuffer = ByteBuffer.allocate(32);
+	
 
 	public NIOCCServerSocket(CCServer ccs) {
 		this.ccs = ccs;
+		pool = ThreadPool.newInstance();
 	}
 
 	@Override
@@ -31,6 +38,8 @@ public class NIOCCServerSocket implements CCServerSocket {
 			ssc.socket().bind(sa);
 			ssc.configureBlocking(false);
 			ssc.register(selector, SelectionKey.OP_ACCEPT);
+			
+			System.err.println("Register server socket...");
 		} catch (IOException e) {
 			// TODO log exception when open selector
 			e.printStackTrace();
@@ -60,7 +69,7 @@ public class NIOCCServerSocket implements CCServerSocket {
                     {
                         server = (ServerSocketChannel)key.channel();
                         client = server.accept();
-                        //System.out.println("客户端： " + client.socket().getRemoteSocketAddress().toString());
+                        System.out.println("客户端： " + client.socket().getRemoteSocketAddress().toString());
                         client.configureBlocking(false);
                         client.register(selector, SelectionKey.OP_READ);
                         key.selector().wakeup();
@@ -71,8 +80,8 @@ public class NIOCCServerSocket implements CCServerSocket {
 //                        ThreadPool.getInstance().execute(analyseHandle);
                     	
                     	
-                    	/*
-                    	 * client = (SocketChannel)selectionKey.channel();
+                    	
+                    	/*client = (SocketChannel)key.channel();
                         receivebuffer.clear();  
                         int count = client.read(receivebuffer);   
                         //System.out.println("服务器端接受客户端数据--:");  
@@ -84,8 +93,7 @@ public class NIOCCServerSocket implements CCServerSocket {
                     	
                     	SocketChannel sc = (SocketChannel)key.channel();
                     	
-                    	ThreadPool.newInstance().execute(new HttpProcessor(ccs, sc));
-                    	
+                    	pool.execute(new HttpProcessor(ccs, sc));
                     	
                     }
  

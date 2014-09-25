@@ -25,6 +25,8 @@ public class HttpProcessor implements Runnable {
 	public void run() {
 		HttpRequestHandler requestHandler = new StaticHttpRequestHandler(sc);
 		
+		requestHandler.handlerSocket(sc);
+		
 		
 		// 1 init HttpRequestHandler and analyze channel socket bytes into httprequest
 		

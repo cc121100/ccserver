@@ -1,5 +1,8 @@
 package org.ccserver.resource;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CCServer {
 	
 	private static CCServer ccServer = null;
@@ -11,25 +14,35 @@ public class CCServer {
 
 
 	private CCServer() {
-		initCCserver();
 	}
 
 
 	
-	public static CCServer newInstance(){
+	public synchronized static CCServer newInstance(){
 		if(ccServer == null){
-			synchronized (ccServer) {
-				if(ccServer != null){
-					ccServer = new CCServer();
-				}
-			}
+			ccServer = new CCServer();
+			initCCserver();
 		}
-		
 		return ccServer;
 	}
 	
-	private void initCCserver() {
+	private static void initCCserver() {
 		//TODO load ccserver configuration from xml
+		
+		System.err.println("Start init CCserver...");
+		//services
+		List<Service> services = new ArrayList<>();
+		Service service = new Service("service1","D:\\cc\\study\\myserver-workspace\\ccserver\\ccserver-http");
+		services.add(service);
+		
+		//server
+		Server server = new Server(9999, services);
+		
+		//ccsConstants
+		CCServerContextConstants ccsConstants = new CCServerContextConstants(IOPattern.NIO, HttpPattern.HTTP_STATIC);
+		
+		ccServer.setServer(server);
+		ccServer.setCcsConstants(ccsConstants);
 		
 		
 	}

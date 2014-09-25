@@ -12,6 +12,9 @@ public class CCServerStartUp implements Runnable {
 	private CCServerSocket ccss = null;
 	
 	public void startup(){
+		
+		System.err.println("CCServerStartUp...");
+		
 		ccServer = CCServer.newInstance();
 		
 		CCServerFactory ccsFactory = new CCServerFactory();
