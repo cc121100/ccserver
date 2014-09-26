@@ -17,7 +17,7 @@ import org.ccserver.http.HttpRequestHeader;
 public class StaticHttpRequestHandler implements HttpRequestHandler{
 	
 	private static String _RN = "\r\n";
-	private static String _Blank = " ";
+	private static String _BLANK = " ";
 	private static String _RNRN = "\r\n\r\n";
 	private static String _COLON = ":";
 	private static String _DASH = "-";
@@ -58,7 +58,7 @@ public class StaticHttpRequestHandler implements HttpRequestHandler{
                 requestSB.append(new String(data));
         	}
         	
-        	System.out.println("parse httprequest");
+        	System.out.println(Thread.currentThread().getPriority() + " - parse httprequest");
         	HttpRequest httpRequest = new HttpRequest();
         	HttpRequestHeader httpHeader = httpRequest.getHeader();
         	Map<String, String> headerMap = httpHeader.getHeaderMap();
@@ -70,7 +70,7 @@ public class StaticHttpRequestHandler implements HttpRequestHandler{
         	
         	StringTokenizer headerLineST = new StringTokenizer(headLine, _RN);
         	String firstLine = headerLineST.nextToken();
-        	String[] strs = firstLine.split(_Blank);
+        	String[] strs = firstLine.split(_BLANK);
         	if(strs == null || strs.length != 3){
         		throw new Exception("http request first line is not correct.");
         	}
@@ -112,7 +112,7 @@ public class StaticHttpRequestHandler implements HttpRequestHandler{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}catch(Exception e2){
-			
+			e2.printStackTrace();
 		}
         
 		//sc.read();

@@ -93,8 +93,8 @@ public class NIOCCServerSocket implements CCServerSocket {
                     	
                     	SocketChannel sc = (SocketChannel)key.channel();
                     	
-                    	pool.execute(new HttpProcessor(ccs, sc));
-                    	
+                    	//pool.execute(new HttpProcessor(ccs, sc));
+                    	new HttpProcessor(ccs, sc).run();
                     }
  
                 }
