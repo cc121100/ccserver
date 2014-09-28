@@ -30,6 +30,7 @@ public class HttpRequestHeader extends HttpHeader {
 	private String contentLength;
 	private String contentType;
 	private String accept;
+	private String origin;
 	private String acceptEncoding;
 	private String acceptLanguage;
 	private String userAgent;
@@ -148,6 +149,14 @@ public class HttpRequestHeader extends HttpHeader {
 
 	public void setHeaderMap(Map<String, String> headerMap) {
 		this.headerMap = headerMap;
+	}
+
+	public String getOrigin() {
+		return origin;
+	}
+
+	public void setOrigin(String origin) {
+		this.origin = origin;
 	}
 	
 	

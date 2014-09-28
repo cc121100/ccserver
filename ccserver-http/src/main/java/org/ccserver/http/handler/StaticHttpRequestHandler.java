@@ -1,10 +1,14 @@
 package org.ccserver.http.handler;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.StringReader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.StringTokenizer;
@@ -18,7 +22,8 @@ public class StaticHttpRequestHandler implements HttpRequestHandler{
 	
 	private static String _RN = "\r\n";
 	private static String _BLANK = " ";
-	private static String _RNRN = "\r\n\r\n";
+//	private static String _RNRN = "\r\n\r\n";
+	private static String _RNRN = "\r\n\r";
 	private static String _COLON = ":";
 	private static String _DASH = "-";
 	
@@ -59,33 +64,40 @@ public class StaticHttpRequestHandler implements HttpRequestHandler{
         	}
         	
         	System.out.println(Thread.currentThread().getPriority() + " - parse httprequest");
+        	System.out.println(requestSB.toString());
         	HttpRequest httpRequest = new HttpRequest();
         	HttpRequestHeader httpHeader = httpRequest.getHeader();
-        	Map<String, String> headerMap = httpHeader.getHeaderMap();
+        	Map<String, String> headerMap = new LinkedHashMap<>();
         	
         	//parse the http header request string
-        	StringTokenizer st = new StringTokenizer(requestSB.toString(), _RNRN);
+        	StringTokenizer st = new StringTokenizer(requestSB.toString(), _RN, false);
         	String headLine = st.nextToken();
         	System.out.println("http header line: " + headLine);
         	
-        	StringTokenizer headerLineST = new StringTokenizer(headLine, _RN);
-        	String firstLine = headerLineST.nextToken();
-        	String[] strs = firstLine.split(_BLANK);
+        	String[] strs = headLine.split(_BLANK);
         	if(strs == null || strs.length != 3){
         		throw new Exception("http request first line is not correct.");
         	}
+        	headerMap.put("Method", strs[0]);
+        	headerMap.put("Path", strs[1]);
+        	headerMap.put("HttpVersion", strs[2]);
         	
-        	headerMap.put("method", strs[0]);
-        	headerMap.put("path", strs[1]);
-        	headerMap.put("httpVersion", strs[2]);
+//        	StringTokenizer headerLineST = new StringTokenizer(headLine, _RN);
+//        	String firstLine = headerLineST.nextToken();
+        	
+        	
+        	
         	
         	String str = null;
         	String[] temp = null;
         	String key = null;
         	String[] keys = null;
         	
-        	while(headerLineST.hasMoreTokens()){
-        		str = headerLineST.nextToken();
+        	while(st.hasMoreTokens()){
+        		str = st.nextToken();
+        		if(str == null || _RN.equals(str)){
+        			break;
+        		}
         		temp = str.split(_COLON);
         		if(temp == null || temp.length != 2){
             		continue;
@@ -99,6 +111,7 @@ public class StaticHttpRequestHandler implements HttpRequestHandler{
         	}
         	
         	httpHeader = setValue(headerMap, HttpRequestHeader.class);
+        	httpRequest.setHeader(httpHeader);
         	
         	System.out.println(httpRequest.toString());
         	
@@ -107,7 +120,7 @@ public class StaticHttpRequestHandler implements HttpRequestHandler{
         	
         	// if exsits, parse all the http headers
         	
-			
+			return httpRequest;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -115,7 +128,6 @@ public class StaticHttpRequestHandler implements HttpRequestHandler{
 			e2.printStackTrace();
 		}
         
-		//sc.read();
 		return null;
 	}
 	
