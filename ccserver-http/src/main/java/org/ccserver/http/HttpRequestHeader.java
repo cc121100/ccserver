@@ -26,16 +26,17 @@ public class HttpRequestHeader extends HttpHeader {
 	Cookie: csrftoken=0QR3SlizfYmT9W5olDSFvKDctOp72NYY*/
 	
 	private String host;
-	private String connection;
-	private String contentLength;
-	private String contentType;
+	
 	private String accept;
-	private String origin;
 	private String acceptEncoding;
 	private String acceptLanguage;
+	
 	private String userAgent;
-	private String cacheControl;
-	private Map<String, String> cookie;
+	private String origin;
+	private String referer;
+	
+	
+	private String cookie;
 	
 	private Map<String, String> headerMap;
 
@@ -71,29 +72,6 @@ public class HttpRequestHeader extends HttpHeader {
 		this.host = host;
 	}
 
-	public String getConnection() {
-		return connection;
-	}
-
-	public void setConnection(String connection) {
-		this.connection = connection;
-	}
-
-	public String getContentLength() {
-		return contentLength;
-	}
-
-	public void setContentLength(String contentLength) {
-		this.contentLength = contentLength;
-	}
-
-	public String getContentType() {
-		return contentType;
-	}
-
-	public void setContentType(String contentType) {
-		this.contentType = contentType;
-	}
 
 	public String getAccept() {
 		return accept;
@@ -127,21 +105,6 @@ public class HttpRequestHeader extends HttpHeader {
 		this.userAgent = userAgent;
 	}
 
-	public String getCacheControl() {
-		return cacheControl;
-	}
-
-	public void setCacheControl(String cacheControl) {
-		this.cacheControl = cacheControl;
-	}
-
-	public Map<String, String> getCookie() {
-		return cookie;
-	}
-
-	public void setCookie(Map<String, String> cookie) {
-		this.cookie = cookie;
-	}
 
 	public Map<String, String> getHeaderMap() {
 		return headerMap;
@@ -157,6 +120,22 @@ public class HttpRequestHeader extends HttpHeader {
 
 	public void setOrigin(String origin) {
 		this.origin = origin;
+	}
+
+	public String getCookie() {
+		return cookie;
+	}
+
+	public void setCookie(String cookie) {
+		this.cookie = cookie;
+	}
+
+	public String getReferer() {
+		return referer;
+	}
+
+	public void setReferer(String referer) {
+		this.referer = referer;
 	}
 	
 	

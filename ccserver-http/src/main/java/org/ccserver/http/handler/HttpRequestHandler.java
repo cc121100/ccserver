@@ -6,7 +6,7 @@ import org.ccserver.http.HttpRequest;
 
 public interface HttpRequestHandler {
 
-	public HttpRequest handlerSocket(SocketChannel sc);
+	public HttpRequest handlerSocket(SocketChannel sc) throws Exception;
 	
 	
 }

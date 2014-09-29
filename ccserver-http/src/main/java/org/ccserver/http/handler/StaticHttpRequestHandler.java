@@ -13,19 +13,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.StringTokenizer;
 
+import org.ccserver.http.HttpConstants;
 import org.ccserver.http.HttpHeader;
 import org.ccserver.http.HttpRequest;
 import org.ccserver.http.HttpRequestBody;
 import org.ccserver.http.HttpRequestHeader;
 
 public class StaticHttpRequestHandler implements HttpRequestHandler{
-	
-	private static String _RN = "\r\n";
-	private static String _BLANK = " ";
-//	private static String _RNRN = "\r\n\r\n";
-	private static String _RNRN = "\r\n\r";
-	private static String _COLON = ":";
-	private static String _DASH = "-";
 	
 	
 	private SocketChannel sc;
@@ -39,8 +33,8 @@ public class StaticHttpRequestHandler implements HttpRequestHandler{
 
 
 	@Override
-	public HttpRequest handlerSocket(SocketChannel sc) {
-		
+	public HttpRequest handlerSocket(SocketChannel sc) throws Exception {
+		System.out.println("-----------------------------------------------");
 		StringBuffer requestSB = new StringBuffer();
         ByteBuffer bb = ByteBuffer.allocate(1024);
         int count = 0;
@@ -63,18 +57,18 @@ public class StaticHttpRequestHandler implements HttpRequestHandler{
                 requestSB.append(new String(data));
         	}
         	
-        	System.out.println(Thread.currentThread().getPriority() + " - parse httprequest");
+        	System.err.println(Thread.currentThread().getPriority() + " - parse httprequest");
         	System.out.println(requestSB.toString());
         	HttpRequest httpRequest = new HttpRequest();
         	HttpRequestHeader httpHeader = httpRequest.getHeader();
         	Map<String, String> headerMap = new LinkedHashMap<>();
         	
         	//parse the http header request string
-        	StringTokenizer st = new StringTokenizer(requestSB.toString(), _RN, false);
+        	StringTokenizer st = new StringTokenizer(requestSB.toString(), HttpConstants._RN, false);
         	String headLine = st.nextToken();
-        	System.out.println("http header line: " + headLine);
+        	System.err.println("http header line: " + headLine);
         	
-        	String[] strs = headLine.split(_BLANK);
+        	String[] strs = headLine.split(HttpConstants._BLANK);
         	if(strs == null || strs.length != 3){
         		throw new Exception("http request first line is not correct.");
         	}
@@ -95,15 +89,15 @@ public class StaticHttpRequestHandler implements HttpRequestHandler{
         	
         	while(st.hasMoreTokens()){
         		str = st.nextToken();
-        		if(str == null || _RN.equals(str)){
+        		if(str == null || HttpConstants._RN.equals(str)){
         			break;
         		}
-        		temp = str.split(_COLON);
+        		temp = str.split(HttpConstants._COLON);
         		if(temp == null || temp.length != 2){
             		continue;
             	}
         		key = temp[0];
-        		keys = key.split(_DASH);
+        		keys = key.split(HttpConstants._DASH);
         		if(keys != null && keys.length == 2){
         			key = keys[0] + keys[1];
         		}
@@ -121,14 +115,10 @@ public class StaticHttpRequestHandler implements HttpRequestHandler{
         	// if exsits, parse all the http headers
         	
 			return httpRequest;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}catch(Exception e2){
-			e2.printStackTrace();
+		} catch(Exception e2){
+			throw new Exception(e2);
 		}
         
-		return null;
 	}
 	
 	private HttpRequestHeader parseHeader(String requestStr){
@@ -139,28 +129,17 @@ public class StaticHttpRequestHandler implements HttpRequestHandler{
 		return null;
 	}
 	
-	private HttpRequestHeader setValue(Map<String, String> map, Class clazz){
+	private HttpRequestHeader setValue(Map<String, String> map, Class clazz) throws Exception{
 		try {
 			HttpRequestHeader httpRequestHeader = (HttpRequestHeader) clazz.newInstance();
 			for(Entry<String, String> entry : map.entrySet()){
-				Method method = clazz.getDeclaredMethod("set"+entry.getKey(), String.class);
+				Method method = clazz.getMethod("set"+entry.getKey(), String.class);
 				method.invoke(httpRequestHeader, entry.getValue());
 			}
 			return httpRequestHeader;
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		}
-		return null;
+		} catch (Exception e) {
+			throw new Exception("Error occurs when setValue", e);
+		} 
 	}
 	
 

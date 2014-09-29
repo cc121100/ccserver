@@ -6,13 +6,15 @@ public class Service {
 	
 	private String path;
 	
+	private String location;
 
 	public Service() {
 	}
 
-	public Service(String name, String path) {
+	public Service(String name, String path,String location) {
 		this.name = name;
 		this.path = path;
+		this.location = location;
 	}
 
 	public String getName() {
@@ -29,6 +31,14 @@ public class Service {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 	
 	

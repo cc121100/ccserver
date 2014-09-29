@@ -32,11 +32,11 @@ public class CCServer {
 		System.err.println("Start init CCserver...");
 		//services
 		List<Service> services = new ArrayList<>();
-		Service service = new Service("service1","D:\\cc\\study\\myserver-workspace\\ccserver\\ccserver-http");
+		Service service = new Service("service1", "/service1", "D:\\cc\\study\\myserver-workspace\\ccserver\\ccserver-http");
 		services.add(service);
 		
 		//server
-		Server server = new Server(9999, services);
+		Server server = new Server(80, services);
 		
 		//ccsConstants
 		CCServerContextConstants ccsConstants = new CCServerContextConstants(IOPattern.NIO, HttpPattern.HTTP_STATIC);
