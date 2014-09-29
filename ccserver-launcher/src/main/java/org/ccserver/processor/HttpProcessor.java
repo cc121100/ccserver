@@ -5,8 +5,11 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
 import org.ccserver.http.HttpRequest;
+import org.ccserver.http.HttpResponse;
 import org.ccserver.http.handler.HttpRequestHandler;
+import org.ccserver.http.handler.HttpResponseHandler;
 import org.ccserver.http.handler.StaticHttpRequestHandler;
+import org.ccserver.http.handler.StaticHttpResponseHandler;
 import org.ccserver.resource.CCServer;
 
 public class HttpProcessor implements Runnable {
@@ -26,13 +29,16 @@ public class HttpProcessor implements Runnable {
 
 	@Override
 	public void run() {
-		HttpRequestHandler requestHandler = new StaticHttpRequestHandler(sc);
+		HttpRequestHandler requestHandler = new StaticHttpRequestHandler();
+		HttpResponseHandler responseHandler = new StaticHttpResponseHandler();
 		
 		HttpRequest httpRequest;
+		HttpResponse httpResponse;
+		
 		try {
 			httpRequest = requestHandler.handlerSocket(sc);
 			
-			String responseStr = httpRequest.getHeader().getPath() + " 404 ";
+			
 			
 			StringBuffer sb = new StringBuffer();
 	        sb.append("HTTP/1.1 200 Not Found").append("\r\n");
@@ -44,21 +50,9 @@ public class HttpProcessor implements Runnable {
 	        sb.append(httpRequest.getHeader().getPath() + " 404");
 	        sb.append("<img src='/a.jpg'/>");
 	        sb.append("");
-	        sb.append("");
-	        sb.append("");
-	        sb.append("");
-	        sb.append("");
-	        sb.append("");
-	        sb.append("");
-	        sb.append("");
 	        sb.append("</body>");
 	        sb.append("</html>");
 			
-			// 1 init HttpRequestHandler and analyze channel socket bytes into httprequest
-			
-			// 2 load resource accroding the request 
-			
-			// 3 init HttpResponseHandler and response the resource
 			ByteBuffer bb = ByteBuffer.allocate(1024);
 			bb.put(sb.toString().getBytes());
 			bb.flip();

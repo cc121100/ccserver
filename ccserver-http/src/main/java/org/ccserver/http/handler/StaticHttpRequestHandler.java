@@ -47,8 +47,7 @@ public class StaticHttpRequestHandler implements HttpRequestHandler{
         			break;
         		}else if(count < 0 ){
         			
-        			sc.close();
-        			return null;
+        			throw new Exception("Socket channel shutdown.");
         		}
         		
         		bb.flip();
@@ -76,11 +75,6 @@ public class StaticHttpRequestHandler implements HttpRequestHandler{
         	headerMap.put("Path", strs[1]);
         	headerMap.put("HttpVersion", strs[2]);
         	
-//        	StringTokenizer headerLineST = new StringTokenizer(headLine, _RN);
-//        	String firstLine = headerLineST.nextToken();
-        	
-        	
-        	
         	
         	String str = null;
         	String[] temp = null;
@@ -107,12 +101,7 @@ public class StaticHttpRequestHandler implements HttpRequestHandler{
         	httpHeader = setValue(headerMap, HttpRequestHeader.class);
         	httpRequest.setHeader(httpHeader);
         	
-        	System.out.println(httpRequest.toString());
-        	
-        	
-        	//TODO get the path of resource, check if the resource exsits, if not ,return 404
-        	
-        	// if exsits, parse all the http headers
+        	//System.out.println(httpRequest.toString());
         	
 			return httpRequest;
 		} catch(Exception e2){

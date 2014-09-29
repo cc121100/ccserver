@@ -62,6 +62,14 @@ public class CCServer {
 	public void setCcsConstants(CCServerContextConstants ccsConstants) {
 		this.ccsConstants = ccsConstants;
 	}
+
+	public static CCServer getCcServer() {
+		return ccServer;
+	}
+
+	public static void setCcServer(CCServer ccServer) {
+		CCServer.ccServer = ccServer;
+	}
 	
 }
 
