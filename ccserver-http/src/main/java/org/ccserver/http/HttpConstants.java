@@ -7,6 +7,8 @@ public class HttpConstants {
 //	public static String _RNRN = "\r\n\r\n";
 	public static String _RNRN = "\r\n\r";
 	public static String _COLON = ":";
+	public static String _COLON_SPACE = ": ";
 	public static String _DASH = "-";
+	public static String _SLASH = "/";
 
 }

@@ -35,6 +35,9 @@ public class HttpRequestHeader extends HttpHeader {
 	private String origin;
 	private String referer;
 	
+	private String ifNoneMatch;
+	private String ifModifiedSince;
+	
 	
 	private String cookie;
 	
@@ -136,6 +139,22 @@ public class HttpRequestHeader extends HttpHeader {
 
 	public void setReferer(String referer) {
 		this.referer = referer;
+	}
+
+	public String getIfNoneMatch() {
+		return ifNoneMatch;
+	}
+
+	public void setIfNoneMatch(String ifNoneMatch) {
+		this.ifNoneMatch = ifNoneMatch;
+	}
+
+	public String getIfModifiedSince() {
+		return ifModifiedSince;
+	}
+
+	public void setIfModifiedSince(String ifModifiedSince) {
+		this.ifModifiedSince = ifModifiedSince;
 	}
 	
 	

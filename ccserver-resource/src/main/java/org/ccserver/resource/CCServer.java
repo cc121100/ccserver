@@ -1,7 +1,9 @@
 package org.ccserver.resource;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CCServer {
 	
@@ -32,7 +34,7 @@ public class CCServer {
 		System.err.println("Start init CCserver...");
 		//services
 		List<Service> services = new ArrayList<>();
-		Service service = new Service("service1", "/service1", "D:\\cc\\study\\myserver-workspace\\ccserver\\ccserver-http");
+		Service service = new Service("service1", "/service1", "D:/cc/study/myserver-workspace/ccserver/webapp/service1");
 		services.add(service);
 		
 		//server
@@ -66,11 +68,19 @@ public class CCServer {
 	public static CCServer getCcServer() {
 		return ccServer;
 	}
-
-	public static void setCcServer(CCServer ccServer) {
-		CCServer.ccServer = ccServer;
-	}
 	
+	public Map<String, Map<String, String>> getServicesMap(){
+		Map<String, Map<String, String>> map = new HashMap<>();
+		for(Service s : ccServer.getServer().getServices()){
+			Map<String, String> m = new HashMap<>();
+			m.put("name", s.getName());
+			m.put("path", s.getPath());
+			m.put("location", s.getLocation());
+			map.put(m.get("name"), m);
+		}
+		return map;
+	}
+
 }
 
 

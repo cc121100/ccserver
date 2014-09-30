@@ -86,14 +86,17 @@ public class StaticHttpRequestHandler implements HttpRequestHandler{
         		if(str == null || HttpConstants._RN.equals(str)){
         			break;
         		}
-        		temp = str.split(HttpConstants._COLON);
+        		temp = str.split(HttpConstants._COLON_SPACE);
         		if(temp == null || temp.length != 2){
             		continue;
             	}
         		key = temp[0];
         		keys = key.split(HttpConstants._DASH);
-        		if(keys != null && keys.length == 2){
-        			key = keys[0] + keys[1];
+        		if(keys != null && keys.length >= 2){
+        			key = "";
+        			for(String keyStr : keys){
+        				key = key + keyStr;
+        			}
         		}
         		headerMap.put(key, temp[1]);
         	}

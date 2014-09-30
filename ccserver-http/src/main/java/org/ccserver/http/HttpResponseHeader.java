@@ -1,6 +1,10 @@
 package org.ccserver.http;
 
 public class HttpResponseHeader extends HttpHeader {
+	
+	private String httpVersion;
+	private String statusCode;
+	private String statusDescription;
 
 	private String acceptRange;
 	private String age;
@@ -61,6 +65,23 @@ public class HttpResponseHeader extends HttpHeader {
 	public void setVary(String vary) {
 		this.vary = vary;
 	}
-	
+	public String getHttpVersion() {
+		return httpVersion;
+	}
+	public void setHttpVersion(String httpVersion) {
+		this.httpVersion = httpVersion;
+	}
+	public String getStatusCode() {
+		return statusCode;
+	}
+	public void setStatusCode(String statusCode) {
+		this.statusCode = statusCode;
+	}
+	public String getStatusDescription() {
+		return statusDescription;
+	}
+	public void setStatusDescription(String statusDescription) {
+		this.statusDescription = statusDescription;
+	}
 	
 }

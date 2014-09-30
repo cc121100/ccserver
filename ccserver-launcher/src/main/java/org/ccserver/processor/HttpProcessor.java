@@ -3,6 +3,7 @@ package org.ccserver.processor;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
+import java.util.Map;
 
 import org.ccserver.http.HttpRequest;
 import org.ccserver.http.HttpResponse;
@@ -38,6 +39,14 @@ public class HttpProcessor implements Runnable {
 		try {
 			httpRequest = requestHandler.handlerSocket(sc);
 			
+			Map<String, Map<String, String>> servicesMap = ccs.getServicesMap();
+			
+			boolean isResourceExisted = responseHandler.checkPathExsited(httpRequest, servicesMap);
+			System.err.println(httpRequest.getHeader().getPath() + " *****: " + isResourceExisted);
+			if(!isResourceExisted){
+				//TODO 404
+			}
+			
 			
 			
 			StringBuffer sb = new StringBuffer();
@@ -45,10 +54,10 @@ public class HttpProcessor implements Runnable {
 	        sb.append("Content-Type: ").append("text/html").append("\r\n");
 	        sb.append("\r\n");
 	        sb.append("<html>");
-	        sb.append("<head><meta http-equiv='Content-Type' content='text/html; charset=utf-8' /><link type='text/css' rel='stylesheet' href='/css/a.css' charset='utf-8' /></head>");
+	        sb.append("<head><meta http-equiv='Content-Type' content='text/html; charset=utf-8' /><link type='text/css' rel='stylesheet' href='/css/bootstrap.css' charset='utf-8' /></head>");
 	        sb.append("<body>");
 	        sb.append(httpRequest.getHeader().getPath() + " 404");
-	        sb.append("<img src='/a.jpg'/>");
+	        sb.append("<img src='/img/blog_img-01.jpg'/>");
 	        sb.append("");
 	        sb.append("</body>");
 	        sb.append("</html>");
@@ -70,5 +79,6 @@ public class HttpProcessor implements Runnable {
 		}
 		
 	}
+	
 
 }
