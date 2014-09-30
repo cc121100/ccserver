@@ -23,7 +23,7 @@ public class StaticHttpResponseHandler implements HttpResponseHandler {
 
 	@Override
 	public boolean checkPathExsited(HttpRequest httpRequest,Map<String, Map<String, String>> servicesMap) {
-		boolean flag = false;
+		//boolean flag = false;
 		String tempRequestPath = null;
 		String requestPath = httpRequest.getHeader().getPath(); // /aaa/bbb/ccc.html
 		if(requestPath == null || "".equals(requestPath)){

@@ -47,6 +47,12 @@ public class HttpProcessor implements Runnable {
 				//TODO 404
 			}
 			
+			// generate response header based on the request header
+			
+			// load response resource
+			
+			// tranform all response header/resource into byte[]
+			
 			
 			
 			StringBuffer sb = new StringBuffer();
