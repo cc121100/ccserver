@@ -1,5 +1,7 @@
 package org.ccserver.http;
 
+import java.lang.reflect.Field;
+
 public class HttpResponse {
 
 	private HttpResponseHeader httpResponseHeader;
@@ -24,6 +26,31 @@ public class HttpResponse {
 
 	public void setHttpResponseBody(HttpResponseBody httpResponseBody) {
 		this.httpResponseBody = httpResponseBody;
+	}
+
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		
+		
+		return "HttpResponse [httpResponseHeader=" + httpResponseHeader
+				+ ", httpResponseBody=" + httpResponseBody + "]";
+		
+	}
+	
+	public static void main(String[] args) {
+		Class clazz1 = HttpResponseHeader.class;
+		System.out.println("-------field--------");
+		for(Field field : clazz1.getDeclaredFields()){
+			System.out.println(field.getName());
+		}
+		
+		Class clazz2 = HttpResponseBody.class;
+		System.out.println("-------field--------");
+		for(Field field : clazz2.getDeclaredFields()){
+			System.out.println(field.getName());
+		}
+		
 	}
 	
 }

@@ -7,6 +7,8 @@ import java.util.Map.Entry;
 
 import org.ccserver.http.HttpConstants;
 import org.ccserver.http.HttpRequest;
+import org.ccserver.http.HttpResponseBody;
+import org.ccserver.http.HttpResponseHeader;
 
 public class StaticHttpResponseHandler implements HttpResponseHandler {
 
@@ -127,6 +129,18 @@ public class StaticHttpResponseHandler implements HttpResponseHandler {
 		
 		String a = str.substring("/aaa".length(), str.length());
 		System.out.println(a);
+	}
+
+	@Override
+	public HttpResponseHeader generateHttpResponseHeader() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HttpResponseBody generateHttpResponseBody() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

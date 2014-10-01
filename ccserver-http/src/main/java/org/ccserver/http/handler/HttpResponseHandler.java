@@ -4,6 +4,9 @@ import java.nio.channels.SocketChannel;
 import java.util.Map;
 
 import org.ccserver.http.HttpRequest;
+import org.ccserver.http.HttpResponse;
+import org.ccserver.http.HttpResponseBody;
+import org.ccserver.http.HttpResponseHeader;
 
 public interface HttpResponseHandler {
 
@@ -13,5 +16,9 @@ public interface HttpResponseHandler {
 
 	boolean checkPathExsited(HttpRequest httpRequest,
 			Map<String, Map<String, String>> servicesMap);
+	
+	HttpResponseHeader generateHttpResponseHeader();
+	
+	HttpResponseBody generateHttpResponseBody();
 	
 }
