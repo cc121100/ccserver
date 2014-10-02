@@ -18,6 +18,7 @@ import org.ccserver.http.HttpHeader;
 import org.ccserver.http.HttpRequest;
 import org.ccserver.http.HttpRequestBody;
 import org.ccserver.http.HttpRequestHeader;
+import org.ccserver.http.HttpResponseHeader;
 
 public class StaticHttpRequestHandler implements HttpRequestHandler{
 	
@@ -114,6 +115,7 @@ public class StaticHttpRequestHandler implements HttpRequestHandler{
 	}
 	
 	private HttpRequestHeader parseHeader(String requestStr){
+		HttpResponseHeader httpResponseHeader = new HttpResponseHeader();
 		return null;
 	}
 	

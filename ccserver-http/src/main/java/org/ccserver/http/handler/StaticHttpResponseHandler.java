@@ -1,20 +1,25 @@
 package org.ccserver.http.handler;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.channels.SocketChannel;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.ccserver.http.HttpConstants;
 import org.ccserver.http.HttpRequest;
+import org.ccserver.http.HttpRequestHeader;
 import org.ccserver.http.HttpResponseBody;
 import org.ccserver.http.HttpResponseHeader;
+import org.ccserver.http.util.FileUtil;
 
 public class StaticHttpResponseHandler implements HttpResponseHandler {
 
 	private SocketChannel sc;
 	
 	private Map<String, String> serviceMapForResponse;
+	
+	private String responseFilePath = null;
 
 	public StaticHttpResponseHandler() {
 	}
@@ -96,8 +101,9 @@ public class StaticHttpResponseHandler implements HttpResponseHandler {
 	}
 	
 	private boolean checkResource(String serviceFileLocation, String requestFilePath){
-		String filePath = generateFullResourcePath(serviceFileLocation, requestFilePath);
-		return new File(filePath).exists();
+		responseFilePath = "";
+		responseFilePath = generateFullResourcePath(serviceFileLocation, requestFilePath);
+		return new File(responseFilePath).exists();
 	}
 	
 	private String getServicePath(String path){
@@ -132,15 +138,20 @@ public class StaticHttpResponseHandler implements HttpResponseHandler {
 	}
 
 	@Override
-	public HttpResponseHeader generateHttpResponseHeader() {
-		// TODO Auto-generated method stub
+	public HttpResponseHeader generateHttpResponseHeader(HttpRequestHeader httpRequestHeader) {
+		
+		HttpResponseHeader httpResponseHeader = new HttpResponseHeader();
+		
+		//
 		return null;
 	}
 
 	@Override
-	public HttpResponseBody generateHttpResponseBody() {
-		// TODO Auto-generated method stub
-		return null;
+	public HttpResponseBody generateHttpResponseBody(HttpRequestHeader httpRequestHeader) throws IOException {
+		HttpResponseBody httpResponseBody = new HttpResponseBody();
+		byte[] bytes = FileUtil.load(responseFilePath);
+		httpResponseBody.setResponseContent(bytes);
+		return httpResponseBody;
 	}
 	
 }
