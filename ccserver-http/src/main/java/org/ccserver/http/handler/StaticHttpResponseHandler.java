@@ -3,12 +3,14 @@ package org.ccserver.http.handler;
 import java.io.File;
 import java.io.IOException;
 import java.nio.channels.SocketChannel;
+import java.util.Date;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.ccserver.http.HttpConstants;
 import org.ccserver.http.HttpRequest;
 import org.ccserver.http.HttpRequestHeader;
+import org.ccserver.http.HttpResponse;
 import org.ccserver.http.HttpResponseBody;
 import org.ccserver.http.HttpResponseHeader;
 import org.ccserver.http.util.FileUtil;
@@ -20,6 +22,7 @@ public class StaticHttpResponseHandler implements HttpResponseHandler {
 	private Map<String, String> serviceMapForResponse;
 	
 	private String responseFilePath = null;
+	private int contentLength = 0;
 
 	public StaticHttpResponseHandler() {
 	}
@@ -66,8 +69,8 @@ public class StaticHttpResponseHandler implements HttpResponseHandler {
 	}
 
 	@Override
-	public void write() {
-		
+	public void write(HttpResponse httpResponse) {
+		StringBuffer sb = new StringBuffer();
 	}
 	
 	private boolean checkPathExsited(String requestPath, Map<String, Map<String, String>> servicesMap){
@@ -135,6 +138,11 @@ public class StaticHttpResponseHandler implements HttpResponseHandler {
 		
 		String a = str.substring("/aaa".length(), str.length());
 		System.out.println(a);
+		
+		File f = new File("D:/development/maintain/201410/New.ext.Document.txt");
+		String fileName = f.getName();
+		String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+		System.err.println(suffix);
 	}
 
 	@Override
@@ -142,8 +150,36 @@ public class StaticHttpResponseHandler implements HttpResponseHandler {
 		
 		HttpResponseHeader httpResponseHeader = new HttpResponseHeader();
 		
-		//
-		return null;
+		//only think about 200/404
+		httpResponseHeader.setConnection(httpResponseHeader.getConnection());
+		httpResponseHeader.setServer("CCServer");
+		httpResponseHeader.setDate(new Date().toGMTString());
+		httpResponseHeader.setAccessControlAllowOrigin("*");
+		
+		File file = new File(responseFilePath);
+		
+		httpResponseHeader.setContentLength(file.length() + "");
+		httpResponseHeader.setContentEncoding("gzip");
+		
+		String accept = httpRequestHeader.getAccept();
+		if(accept.contains("text/html")){
+			httpResponseHeader.setContentType("text/html;charset=UTF-8");
+		}else if(accept.contains("text/css")){
+			httpResponseHeader.setContentType("text/css;charset=UTF-8");
+		}else if(accept.contains("image/webp")){
+			String fileName = file.getName();
+			String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+			httpResponseHeader.setContentType("image/" + suffix + ";charset=UTF-8");
+		}else {
+			httpResponseHeader.setContentType("application/x-javascript;charset=UTF-8");
+		}
+		
+		// HTTP/1.1 200 Not Found
+		httpResponseHeader.setHttpVersion("HTTP/1.1");
+		httpResponseHeader.setStatusCode("200");
+		httpResponseHeader.setStatusDescription("OK");
+		
+		return httpResponseHeader;
 	}
 
 	@Override

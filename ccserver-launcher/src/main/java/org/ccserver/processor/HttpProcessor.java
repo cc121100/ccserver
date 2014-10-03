@@ -47,6 +47,12 @@ public class HttpProcessor implements Runnable {
 				//TODO 404
 			}
 			
+			httpResponse = new HttpResponse();
+			httpResponse.setHttpResponseHeader(responseHandler.generateHttpResponseHeader(httpRequest.getHeader()));
+			httpResponse.setHttpResponseBody(responseHandler.generateHttpResponseBody(httpRequest.getHeader()));
+			
+			responseHandler.write(httpResponse);
+			
 			// generate response header based on the request header
 			
 			// load response resource
@@ -55,7 +61,7 @@ public class HttpProcessor implements Runnable {
 			
 			
 			
-			StringBuffer sb = new StringBuffer();
+			/*StringBuffer sb = new StringBuffer();
 	        sb.append("HTTP/1.1 200 Not Found").append("\r\n");
 	        sb.append("Content-Type: ").append("text/html").append("\r\n");
 	        sb.append("\r\n");
@@ -71,9 +77,10 @@ public class HttpProcessor implements Runnable {
 			ByteBuffer bb = ByteBuffer.allocate(1024);
 			bb.put(sb.toString().getBytes());
 			bb.flip();
-			sc.write(bb);
+			sc.write(bb);*/
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
+			// 404
 			e1.printStackTrace();
 		}finally{
 			try {

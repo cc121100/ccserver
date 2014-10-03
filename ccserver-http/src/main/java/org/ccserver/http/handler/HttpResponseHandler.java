@@ -14,7 +14,7 @@ public interface HttpResponseHandler {
 
 	public Byte[] loadResource();
 	
-	public void write();
+	public void write(HttpResponse httpResponse);
 
 	boolean checkPathExsited(HttpRequest httpRequest,
 			Map<String, Map<String, String>> servicesMap);

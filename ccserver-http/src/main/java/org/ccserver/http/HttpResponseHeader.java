@@ -14,6 +14,7 @@ public class HttpResponseHeader extends HttpHeader {
 	private String retryAfter;
 	private String server;
 	private String vary;
+	private String accessControlAllowOrigin;
 	
 	
 	
@@ -82,6 +83,19 @@ public class HttpResponseHeader extends HttpHeader {
 	}
 	public void setStatusDescription(String statusDescription) {
 		this.statusDescription = statusDescription;
+	}
+	public String getAccessControlAllowOrigin() {
+		return accessControlAllowOrigin;
+	}
+	public void setAccessControlAllowOrigin(String accessControlAllowOrigin) {
+		this.accessControlAllowOrigin = accessControlAllowOrigin;
+	}
+	
+	public String toString(){
+		StringBuffer sb = new StringBuffer();
+		
+		
+		return sb.toString();
 	}
 	
 }
